@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Sheets</title>
+    
+    <!-- Include SheetJS for Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <!-- Include Chart.js for Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>CalcMate</h1>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <button onclick="formatText('bold')">Bold</button>
+        <button onclick="formatText('italic')">Italic</button>
+        <button onclick="formatText('color')">Color</button>
+        <button onclick="formatText('size')">Font Size</button>
+        <button onclick="resetFormatting()">Reset Formatting</button>
+        <button onclick="clearSheet()" style="background-color: red;">Clear Sheet</button>
+        <button onclick="exportToExcel()" style="background-color: green;">Export to Excel</button>
+        <button onclick="addRow()">Add Row</button>
+        <button onclick="deleteRow()">Delete Row</button>
+    </div>
+
+    <!-- Spreadsheet Table -->
+    <div class="table-container">
+        <table id="spreadsheet">
+            <thead>
+                <tr>
+                    <th></th> <!-- Empty space for row numbers -->
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be created dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <div class="toolbar">
+        <button onclick="trimText()">TRIM</button>
+        <button onclick="toUpperCaseText()">UPPER</button>
+        <button onclick="toLowerCaseText()">LOWER</button>
+        <button onclick="removeDuplicates()">REMOVE DUPLICATES</button>
+        <button onclick="findAndReplace()">FIND & REPLACE</button>
+    </div>
+    <div class="toolbar">
+        <button onclick="saveSpreadsheet()">Save Spreadsheet</button>
+        <button onclick="loadSpreadsheet()">Load Spreadsheet</button>
+    </div>
+    
+   <!-- Chart Section -->
+   <div class="chart-container">
+       <label for="columnSelect">Select Column for Chart:</label>
+       <select id="columnSelect">
+           <option value="A">Column A</option>
+           <option value="B">Column B</option>
+           <option value="C">Column C</option>
+           <option value="D">Column D</option>
+       </select>
+
+       <label for="chartTypeSelect">Select Chart Type:</label>
+       <select id="chartTypeSelect">
+           <option value="bar">Bar Chart</option>
+           <option value="line">Line Chart</option>
+           <option value="pie">Pie Chart</option>
+           <option value="doughnut">Doughnut Chart</option>
+           <option value="radar">Radar Chart</option>
+       </select>
+
+       <button onclick="generateChart()">Generate Chart</button>
+
+       <!-- Chart Wrapper -->
+       <div class="chart-wrapper">
+           <canvas id="myChart"></canvas>
+       </div>
+ 
+
+    <script src="script.js"></script>
+
+    <!-- Footer -->
+    <footer>
+        <p>Made & Developed by <strong>Harshpreet Singh</strong></p>
+    </footer>
+
+</body>
+</html>

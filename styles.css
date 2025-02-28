@@ -1,0 +1,170 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(to right, #2b5876, #4e4376);
+    color: white;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Title */
+h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Toolbar for Formatting Buttons */
+.toolbar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    background-color: #ff7e5f;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #feb47b;
+}
+
+/* Spreadsheet Container */
+.table-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Table Headers */
+thead {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    font-weight: bold;
+}
+
+/* Table Cells */
+th, td {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    padding: 5px;
+}
+
+/* Input fields inside table */
+input {
+    border: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
+    color: white;
+}
+
+/* Input Field Focus Effect */
+input:focus {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid #4285f4;
+    outline: none;
+}
+
+/* Chart Section */
+.chart-container {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.chart-wrapper {
+    width: 80%;
+    max-width: 600px;
+    height: 400px;
+    margin: auto;
+}
+
+/* Ensure Chart Scales Properly */
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Dropdown Styling */
+select {
+    background: white;
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+/* Improved Dark Table Borders */
+th, td {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Remove default input styles on focus */
+input:focus {
+    border: none;
+    outline: none;
+}
+
+/* Button Colors for Actions */
+button[onclick="clearSheet()"] {
+    background-color: red;
+}
+
+button[onclick="clearSheet()"]:hover {
+    background-color: darkred;
+}
+
+button[onclick="exportToExcel()"] {
+    background-color: green;
+}
+
+button[onclick="exportToExcel()"]:hover {
+    background-color: darkgreen;
+}
+/* Footer Styling */
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 10px; /* Adds a small gap from the bottom */
+    left: 50%; /* Moves the footer to the center */
+    transform: translateX(-50%); /* Ensures perfect centering */
+    width: 80%; /* Adjusts width to avoid full-page stretching */
+    max-width: 600px; /* Keeps it compact on large screens */
+}
