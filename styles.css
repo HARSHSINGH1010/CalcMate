@@ -1,4 +1,3 @@
-/* Global Styles */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -8,14 +7,14 @@ body {
     padding: 20px;
 }
 
-/* Title */
+
 h1 {
     font-size: 28px;
     margin-bottom: 15px;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Toolbar for Formatting Buttons */
+
 .toolbar {
     display: flex;
     justify-content: center;
@@ -42,7 +41,7 @@ button:hover {
     background-color: #feb47b;
 }
 
-/* Spreadsheet Container */
+
 .table-container {
     display: flex;
     justify-content: center;
@@ -58,14 +57,14 @@ table {
     overflow: hidden;
 }
 
-/* Table Headers */
+
 thead {
     background-color: rgba(255, 255, 255, 0.3);
     color: white;
     font-weight: bold;
 }
 
-/* Table Cells */
+
 th, td {
     border: 1px solid rgba(255, 255, 255, 0.5);
     width: 100px;
@@ -74,7 +73,7 @@ th, td {
     padding: 5px;
 }
 
-/* Input fields inside table */
+
 input {
     border: none;
     width: 100%;
@@ -86,14 +85,14 @@ input {
     color: white;
 }
 
-/* Input Field Focus Effect */
+
 input:focus {
     background-color: rgba(255, 255, 255, 0.3);
     border: 1px solid #4285f4;
     outline: none;
 }
 
-/* Chart Section */
+
 .chart-container {
     width: 80%;
     margin: 20px auto;
@@ -110,13 +109,13 @@ input:focus {
     margin: auto;
 }
 
-/* Ensure Chart Scales Properly */
+
 canvas {
     width: 100% !important;
     height: 100% !important;
 }
 
-/* Dropdown Styling */
+
 select {
     background: white;
     color: black;
@@ -125,18 +124,18 @@ select {
     margin: 5px;
 }
 
-/* Improved Dark Table Borders */
+
 th, td {
     border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-/* Remove default input styles on focus */
+
 input:focus {
     border: none;
     outline: none;
 }
 
-/* Button Colors for Actions */
+
 button[onclick="clearSheet()"] {
     background-color: red;
 }
@@ -152,7 +151,7 @@ button[onclick="exportToExcel()"] {
 button[onclick="exportToExcel()"]:hover {
     background-color: darkgreen;
 }
-/* Footer Styling */
+
 footer {
     margin-top: 20px;
     padding: 10px;
@@ -162,9 +161,9 @@ footer {
     font-size: 14px;
     border-radius: 10px;
     position: fixed;
-    bottom: 10px; /* Adds a small gap from the bottom */
-    left: 50%; /* Moves the footer to the center */
-    transform: translateX(-50%); /* Ensures perfect centering */
-    width: 80%; /* Adjusts width to avoid full-page stretching */
-    max-width: 600px; /* Keeps it compact on large screens */
+    bottom: 10px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 80%; 
+    max-width: 600px; 
 }

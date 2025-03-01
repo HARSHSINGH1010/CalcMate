@@ -1,28 +1,28 @@
-let lastSelectedCell = null; // Store last selected cell
-let isDragging = false; // Flag to check if dragging
-let startCell = null; // Store the initial cell
-let selectedCells = []; // Store selected cells for multi-selection
-let cellDependencies = {}; // Stores formula dependencies
+let lastSelectedCell = null; 
+let isDragging = false; 
+let startCell = null; 
+let selectedCells = []; 
+let cellDependencies = {}; 
 document.addEventListener("DOMContentLoaded", function () {
     const tbody = document.querySelector("#spreadsheet tbody");
 
-    // Create 10 rows dynamically
+    
     for (let i = 1; i <= 10; i++) {
         let row = document.createElement("tr");
 
-        // Row number column
+       
         let th = document.createElement("th");
         th.innerText = i;
         row.appendChild(th);
 
-        // Create 4 columns (A, B, C, D)
+       
         for (let j = 0; j < 4; j++) {
             let cell = document.createElement("td");
             let input = document.createElement("input");
             input.setAttribute("data-row", i);
             input.setAttribute("data-col", String.fromCharCode(65 + j)); // A, B, C, D
 
-            // Dragging functionality
+           
             input.addEventListener("mousedown", function () {
                 lastSelectedCell = input;
                 isDragging = true;
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
             input.addEventListener("mouseover", function () {
                 if (isDragging) {
                     selectedCells.push(input);
-                    input.style.backgroundColor = "#e8f0fe"; // Highlight selected cells
+                    input.style.backgroundColor = "#e8f0fe"; 
                 }
             });
 
@@ -55,15 +55,15 @@ document.addEventListener("DOMContentLoaded", function () {
     loadData();
 });
 
-// Apply dragged content to selected cells
+
 function applyDragContent() {
     if (!startCell || selectedCells.length < 2) return;
 
-    let value = startCell.value; // Get original cell value
+    let value = startCell.value; 
 
     selectedCells.forEach(cell => {
         if (value.startsWith("=")) {
-            // Adjust formula references dynamically
+            
             let newFormula = value.replace(/\d+/g, match => {
                 return parseInt(match) + (parseInt(cell.getAttribute("data-row")) - parseInt(startCell.getAttribute("data-row")));
             });
@@ -78,7 +78,7 @@ function applyDragContent() {
     saveData();
 }
 
-// Handle formulas
+
 function handleFormula(event) {
     let input = event.target;
     let value = input.value.trim();
@@ -86,14 +86,14 @@ function handleFormula(event) {
 
     if (value.startsWith("=")) {
         try {
-            let formula = value.substring(1); // Remove '='
+            let formula = value.substring(1); 
             let result = evaluateFormula(formula, cellKey);
             input.value = result;
 
-            // Store formula for future updates
+            
             input.setAttribute("data-formula", formula);
 
-            // Track dependencies
+            
             trackDependencies(cellKey, formula);
         } catch (error) {
             input.value = "Error";
@@ -103,30 +103,30 @@ function handleFormula(event) {
 }
 
 
-// Track dependencies for auto-updating formulas
+
 function trackDependencies(cellKey, formula) {
     cellDependencies[cellKey] = [];
 
-    let cellRefs = formula.match(/[A-D]\d+/g); // Match cell references (e.g., A1, B3)
+    let cellRefs = formula.match(/[A-D]\d+/g); 
     if (cellRefs) {
         cellDependencies[cellKey] = cellRefs;
     }
 }
 
-// Auto-update dependent formulas
+
 function updateDependentCells(changedCellKey) {
     Object.keys(cellDependencies).forEach(dependentCell => {
         if (cellDependencies[dependentCell].includes(changedCellKey)) {
             let input = document.querySelector(`input[data-col="${dependentCell.charAt(0)}"][data-row="${dependentCell.slice(1)}"]`);
             if (input) {
-                let formula = "=" + input.dataset.formula; // Recalculate formula
+                let formula = "=" + input.dataset.formula; 
                 input.value = evaluateFormula(formula);
             }
         }
     });
 }
 
-// Update formula when cell value changes
+
 document.querySelectorAll("input").forEach(input => {
     input.addEventListener("input", function () {
         let cellKey = input.getAttribute("data-col") + input.getAttribute("data-row");
@@ -135,10 +135,10 @@ document.querySelectorAll("input").forEach(input => {
 });
 
 
-// Evaluate formulas like SUM(A1:A3), AVERAGE(A1:A3), etc.
+
 function evaluateFormula(formula, currentCell = "") {
     try {
-        // Handle SUM, AVERAGE, MAX, MIN, COUNT functions
+        
         let match;
         if ((match = formula.match(/SUM\((\w)(\d+):(\w)(\d+)\)/))) return calculateRange(match, "SUM");
         if ((match = formula.match(/AVERAGE\((\w)(\d+):(\w)(\d+)\)/))) return calculateRange(match, "AVERAGE");
@@ -146,20 +146,20 @@ function evaluateFormula(formula, currentCell = "") {
         if ((match = formula.match(/MIN\((\w)(\d+):(\w)(\d+)\)/))) return calculateRange(match, "MIN");
         if ((match = formula.match(/COUNT\((\w)(\d+):(\w)(\d+)\)/))) return calculateRange(match, "COUNT");
 
-        // Replace cell references with actual values (supports A1, $A$1)
+        
         formula = formula.replace(/\$?([A-D])\$?(\d+)/g, (match, col, row) => {
             let cell = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
             return cell && !isNaN(cell.value) ? parseFloat(cell.value) : 0;
         });
 
-        return eval(formula); // Evaluate the mathematical expression
+        return eval(formula); 
     } catch (error) {
         return "Error";
     }
 }
 
 
-// Calculate SUM, AVERAGE, MAX, etc.
+
 function calculateRange(match, type) {
     let [_, startCol, startRow, endCol, endRow] = match;
     startRow = parseInt(startRow);
@@ -223,7 +223,7 @@ function loadSpreadsheet() {
     alert(`Spreadsheet "${spreadsheetName}" loaded successfully!`);
 }
 
-// Save & Load Data
+
 function saveData() {
     let data = {};
     document.querySelectorAll("input").forEach(input => {
@@ -231,7 +231,7 @@ function saveData() {
         let col = input.getAttribute("data-col");
         let key = `${col}${row}`;
         data[key] = {
-            value: input.value // Store only the text, not an object
+            value: input.value 
         };
     });
     localStorage.setItem("spreadsheetData", JSON.stringify(data));
@@ -248,14 +248,14 @@ function loadData() {
         let key = `${col}${row}`;
 
         if (data[key] && typeof data[key] === "object") {
-            input.value = data[key].value || ""; // Extract value correctly
+            input.value = data[key].value || ""; 
         }
     });
 }
 
 
 
-// Clear Sheet
+
 function clearSheet() {
     document.querySelectorAll("input").forEach(input => {
         input.value = "";
@@ -263,7 +263,7 @@ function clearSheet() {
     localStorage.removeItem("spreadsheetData");
     location.reload();
 }
-// Function to format text (Bold, Color, Font Size)
+
 function formatText(type) {
     if (!lastSelectedCell) {
         alert("Click on a cell first before applying formatting!");
@@ -285,7 +285,7 @@ function formatText(type) {
     saveData();
 }
 
-// Function to reset formatting
+
 function resetFormatting() {
     if (!lastSelectedCell) {
         alert("Click on a cell first before resetting formatting!");
@@ -371,7 +371,7 @@ document.querySelectorAll("th").forEach(header => {
     });
 });
 
-// Export to Excel
+
 function exportToExcel() {
     let table = document.createElement("table");
     let thead = document.createElement("thead");
@@ -409,33 +409,33 @@ function exportToExcel() {
     XLSX.writeFile(wb, "Google_Sheets_Clone.xlsx");
 }
 function generateChart() {
-    let column = document.getElementById("columnSelect").value; // Get selected column
-    let chartType = document.getElementById("chartTypeSelect").value; // Get selected chart type
+    let column = document.getElementById("columnSelect").value; 
+    let chartType = document.getElementById("chartTypeSelect").value; 
     let labels = [];
     let values = [];
 
-    // Get all input fields from the selected column
+    
     document.querySelectorAll(`input[data-col='${column}']`).forEach(input => {
         let row = input.getAttribute("data-row");
-        let value = parseFloat(input.value.trim()); // Convert to number
+        let value = parseFloat(input.value.trim()); 
 
-        if (!isNaN(value) && input.value.trim() !== "") { // Ensure valid number input
+        if (!isNaN(value) && input.value.trim() !== "") { 
             labels.push("Row " + row);
             values.push(value);
         }
     });
 
-    // ✅ Debugging: Check if data is being collected properly
+    
     console.log("Chart Labels:", labels);
     console.log("Chart Values:", values);
 
-    // ❌ Prevents chart creation if no valid data is found
+    
     if (values.length === 0) {
         alert("No valid numerical data found in the selected column!");
         return;
     }
 
-    // ✅ Check if the canvas exists before drawing the chart
+    
     let canvas = document.getElementById("myChart");
     if (!canvas) {
         alert("Error: Chart canvas not found!");
@@ -444,14 +444,14 @@ function generateChart() {
 
     let ctx = canvas.getContext("2d");
 
-    // ✅ Fix: Ensure the chart is an instance of Chart.js before destroying it
+    
     if (window.myChart instanceof Chart) {
         window.myChart.destroy();
     }
 
-    // ✅ Create a new chart with the selected type
+    
     window.myChart = new Chart(ctx, {
-        type: chartType, // Dynamically select chart type
+        type: chartType, 
         data: {
             labels: labels,
             datasets: [{
@@ -481,7 +481,7 @@ function generateChart() {
 
     console.log(`Chart generated successfully! Type: ${chartType}`);
 }
-// Function to TRIM text (removes leading & trailing spaces)
+
 function trimText() {
     if (!lastSelectedCell) {
         alert("Click on a cell first before applying TRIM!");
@@ -491,7 +491,7 @@ function trimText() {
     saveData();
 }
 
-// Function to convert text to UPPERCASE
+
 function toUpperCaseText() {
     if (!lastSelectedCell) {
         alert("Click on a cell first before applying UPPER!");
@@ -501,7 +501,7 @@ function toUpperCaseText() {
     saveData();
 }
 
-// Function to convert text to lowercase
+
 function toLowerCaseText() {
     if (!lastSelectedCell) {
         alert("Click on a cell first before applying LOWER!");
@@ -511,15 +511,15 @@ function toLowerCaseText() {
     saveData();
 }
 
-// Function to remove duplicate rows in a selected column
+
 function removeDuplicates() {
-    let column = document.getElementById("columnSelect").value; // Get selected column
+    let column = document.getElementById("columnSelect").value; 
     let seenValues = new Set();
 
     document.querySelectorAll(`input[data-col='${column}']`).forEach((input, index) => {
         let value = input.value.trim();
         if (value && seenValues.has(value)) {
-            input.value = ""; // Clear the duplicate value but keep the row
+            input.value = ""; 
         } else {
             seenValues.add(value);
         }
@@ -529,9 +529,9 @@ function removeDuplicates() {
 }
 
 
-// Function to find and replace text within a selected column
+
 function findAndReplace() {
-    let column = document.getElementById("columnSelect").value; // Get selected column
+    let column = document.getElementById("columnSelect").value; 
     let findText = prompt("Enter text to find:");
     if (!findText) return;
 
@@ -546,7 +546,7 @@ function findAndReplace() {
     saveData();
 }
 
-// Expose new functions globally
+
 window.trimText = trimText;
 window.toUpperCaseText = toUpperCaseText;
 window.toLowerCaseText = toLowerCaseText;
